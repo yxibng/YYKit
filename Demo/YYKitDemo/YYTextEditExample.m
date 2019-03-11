@@ -29,12 +29,7 @@
     [self initImageView];
     __weak typeof(self) _self = self;
     
-    UIView *toolbar;
-    if ([UIVisualEffectView class]) {
-        toolbar = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
-    } else {
-        toolbar = [UIToolbar new];
-    }
+    UIVisualEffectView *toolbar = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
     toolbar.size = CGSizeMake(kScreenWidth, 40);
     toolbar.top = kiOS7Later ? 64 : 0;
     [self.view addSubview:toolbar];
@@ -74,7 +69,7 @@
     label.text = @"Vertical:";
     label.size = CGSizeMake([label.text widthForFont:label.font] + 2, toolbar.height);
     label.left = 10;
-    [toolbar addSubview:label];
+    [toolbar.contentView addSubview:label];
     
     _verticalSwitch = [UISwitch new];
     [_verticalSwitch sizeToFit];
@@ -90,7 +85,7 @@
         _self.exclusionSwitch.enabled = !switcher.isOn;
         _self.textView.verticalForm = switcher.isOn; /// Set vertical form
     }];
-    [toolbar addSubview:_verticalSwitch];
+    [toolbar.contentView addSubview:_verticalSwitch];
     
     label = [UILabel new];
     label.backgroundColor = [UIColor clearColor];
@@ -98,7 +93,7 @@
     label.text = @"Debug:";
     label.size = CGSizeMake([label.text widthForFont:label.font] + 2, toolbar.height);
     label.left = _verticalSwitch.right + 5;
-    [toolbar addSubview:label];
+    [toolbar.contentView addSubview:label];
     
     _debugSwitch = [UISwitch new];
     [_debugSwitch sizeToFit];
@@ -109,7 +104,7 @@
     [_debugSwitch addBlockForControlEvents:UIControlEventValueChanged block:^(UISwitch *switcher) {
         [YYTextExampleHelper setDebug:switcher.isOn];
     }];
-    [toolbar addSubview:_debugSwitch];
+    [toolbar.contentView addSubview:_debugSwitch];
     
     label = [UILabel new];
     label.backgroundColor = [UIColor clearColor];
@@ -117,7 +112,7 @@
     label.text = @"Exclusion:";
     label.size = CGSizeMake([label.text widthForFont:label.font] + 2, toolbar.height);
     label.left = _debugSwitch.right + 5;
-    [toolbar addSubview:label];
+    [toolbar.contentView addSubview:label];
     
     _exclusionSwitch = [UISwitch new];
     [_exclusionSwitch sizeToFit];
@@ -127,7 +122,7 @@
     [_exclusionSwitch addBlockForControlEvents:UIControlEventValueChanged block:^(UISwitch *switcher) {
         [_self setExclusionPathEnabled:switcher.isOn];
     }];
-    [toolbar addSubview:_exclusionSwitch];
+    [toolbar.contentView addSubview:_exclusionSwitch];
     
     
     [[YYTextKeyboardManager defaultManager] addObserver:self];
